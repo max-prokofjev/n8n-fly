@@ -4,6 +4,15 @@ primary_region = 'fra'
 [build]
   dockerfile = 'Dockerfile'
 
+[env]
+  # Execution data cleanup - crucial for SQLite to prevent memory issues
+  EXECUTIONS_DATA_PRUNE = "true"
+  EXECUTIONS_DATA_MAX_AGE = "24"  # Keep executions for 1 days (in hours)
+  EXECUTIONS_DATA_PRUNE_MAX_COUNT = "10000"  # Maximum number of executions to keep
+  EXECUTIONS_DATA_SAVE_ON_ERROR = "all"  # Save failed executions for debugging
+  EXECUTIONS_DATA_SAVE_ON_SUCCESS = "none"  # Don't save successful executions (saves space)
+  EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS = "true"  # Keep manual test executions
+
 [[mounts]]
   source = 'n8n_data'
   destination = '/home/node/data'
